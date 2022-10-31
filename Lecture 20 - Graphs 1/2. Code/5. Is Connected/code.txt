@@ -1,0 +1,95 @@
+#include <iostream>
+#include<vector>
+#include<queue>
+using namespace std;
+
+/*
+void dfs(vector<vector<bool>>& edges, vector<bool>& visited, int n, int sv) {
+    visited[sv] = true;
+    for(int i = 0; i < n ; i++) {
+        if(!visited[i] && edges[sv][i]) {
+            dfs(edges, visited, n, i);
+            visited[i] = true;
+        }
+    }
+    
+}
+bool isConnected(vector<vector<bool>>& edges, vector<bool>& visited, int n) {
+    dfs(edges, visited, n, 0);
+    for(int i = 0; i < n; i++) {
+        if(!visited[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+*/
+
+
+bool isConnectedDFS(vector<vector<bool>>& edges, vector<bool>& visited, int n, int sv) {
+    
+    visited[sv] = true;
+    bool ans = false;
+    for(int i = 0; i < n; i++) {
+        if(!visited[i] && edges[sv][i]) {
+            ans = isConnectedDFS(edges, visited, n, i);
+            visited[i] = true;
+            if(ans == false ) return ans;
+        }
+    }
+    
+    for(int i = 0; i < n; i++) {
+        if(!visited[i]) {
+            return false;
+        }
+    }
+    return true;
+    // if(i == n) return true;
+    // if(sv == n) 
+    // ans = true;
+    // return ans;
+}
+bool isConnectedBFS(vector<vector<bool>> edges, vector<bool> visited, int n, int sv) {
+    queue<int> q;
+    q.push(sv);
+    visited[sv] = true;
+    
+    while( !q.empty()) {
+        int fr = q.front();
+        q.pop();
+        for(int i = 0; i < n; i++) {
+            if(!visited[i] && edges[fr][i]) {
+                q.push(i);
+                visited[i] = true;
+            }
+        }
+    }
+    int i = 0;
+    for(; i < n; i++) {
+        if( !visited[i]) {
+            return false;
+            break;
+        }
+    }
+    if(i == n) {
+        return true;
+    }
+}
+
+int main() {
+    int v, e;
+    cin >> v >> e;
+    vector<vector<bool>> edges(v, vector<bool>(v, false));
+    vector<bool> visited(v, false);
+    
+    for(int i = 0; i < e; i++) { 
+        int a, b;
+        cin >> a >> b;
+        edges[a][b] = true;
+        edges[b][a] = true;
+    }
+    
+
+    cout << (isConnectedDFS(edges, visited, v, 0) ? "true" : "false");
+    
+}

@@ -1,0 +1,117 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+void print(vector<vector<int>>& edges, int n, int sv, vector<bool>& visited) {
+    queue<int> q;
+    
+    for(int i = 0 ; i < n ; i ++) {
+        if(!visited[i]) {
+            q.push(i);
+            visited[i] = true;
+
+            while(!q.empty()) {
+                int curvertex = q.front();
+                q.pop();
+                cout << curvertex << " ";
+
+                for(int i = 0; i < n; i++) {
+                    if(i == curvertex) continue;
+
+                    if(!visited[i] && edges[curvertex][i] == 1) {
+                        q.push(i);
+                        visited[i] = true;
+                    }
+                }
+            }
+        }
+        
+    }
+}
+
+
+
+// void printBFS(int** edges, int n, int sv) {
+
+// 	queue<int> q;
+// 	bool* visited = new bool[n];
+// 	for (int i = 0; i < n; i++) {
+// 		visited[i] = false;
+// 	}
+// 	q.push(sv);
+// 	visited[sv] = true;
+
+// 	while (!q.empty()) {
+// 		int curvertex = q.front();
+// 		q.pop();
+// 		cout << curvertex << " ";
+
+// 		for (int i = 0; i < n; i++) {
+// 			if (i == curvertex) continue;
+
+// 			if (edges[curvertex][i] == 1 && !visited[i]) {
+// 				q.push(i);
+// 				visited[i] = true;
+// 			}
+// 		}
+// 	}
+// }
+int main() {
+    // int n,e;
+    // cin>>n>>e;
+    
+    // int** edges = new int*[n];
+    // for(int i = 0; i < n; i++) {
+    //     edges[i] = new int[n];
+    //     for(int j = 0; j < n; j++) {
+    //         edges[i][j] = 0;
+    //     }
+    // }
+    
+    // for(int i = 0; i < e; i++) {
+    //     int f, s;
+    //     cin >> f >> s;
+    //     edges[f][s] = 1;
+    //     edges[s][f] = 1;
+    // }
+    
+    
+    // printBFS(edges, n, 0);
+    
+     int v,e;
+    cin >> v >> e;
+    
+    vector<vector<bool>> edges(v, vector<bool>(v, false));
+    
+    for(int i = 0; i < e; ++i) {
+        int first;
+        int second;
+        cin >> first >> second;
+        edges[first][second] = true;
+        edges[second][first] = true;
+    }
+    
+    vector<bool> visited(v, false);
+    
+    queue<int> q;
+    
+    for(int i = 0; i < v ; i++) {
+        if(!visited[i]) {
+            q.push(i);
+            visited[i] = true;
+            while(!q.empty()) {
+        		int front = q.front();
+        		q.pop();
+        		cout << front << " ";
+        
+        		for(int i = 0; i < v; i++) {
+            		if(edges[front][i] and !visited[i]) {
+                		q.push(i);
+                		visited[i] = true;
+            		}
+        		}
+    		}
+    	}
+    }
+    
+}
